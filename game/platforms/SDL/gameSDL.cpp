@@ -4035,6 +4035,9 @@ char isLastMouseButtonRight() {
     return screen->isLastMouseButtonRight();
     }
 
+HetuwMouseActionBuffer* hetuwGetMouseActionBuffer() {
+    return screen->hetuwGetMouseActionBuffer();
+}
 
 
 void obscureRecordedNumericTyping( char inObscure, 

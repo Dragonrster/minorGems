@@ -164,7 +164,33 @@ typedef struct SocketEvent {
         char *bodyBytesHex;
     } SocketEvent;
 
+// hetuw mod - copied from https://github.com/Awbz/minorGems/commit/94911116df3ed21e525d9f4c67d4fffbee70f3ff
+namespace MouseButton {
+    enum {
+        NONE,
+        LEFT,
+        MIDDLE,
+        RIGHT,
+        WHEELUP,
+        WHEELDOWN
+        };
+    }
 
+class HetuwMouseActionBuffer {
+	public:
+		const int bufferSize = 32;
+		int buffer[32];
+		int bufferPos = 0;
+
+		void Add(int value) {
+			if (bufferPos >= bufferSize) return;
+			buffer[bufferPos] = value;
+			bufferPos++;
+		}
+		void Reset() {
+			bufferPos = 0;
+		}
+};
 
 
 /**
@@ -666,6 +692,9 @@ class ScreenGL {
             }
 
 
+		HetuwMouseActionBuffer* hetuwGetMouseActionBuffer() {
+			return &mHetuwMouseBuffer;
+		}
 
     private :
 
@@ -841,6 +870,9 @@ class ScreenGL {
 
 
         char mLastMouseButtonRight;
+
+        		HetuwMouseActionBuffer mHetuwMouseBuffer;
+
         
         // for playing back minimized window state
         char mLastMinimizedStatus;
